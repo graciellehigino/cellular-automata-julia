@@ -1,30 +1,44 @@
 module CA
+export CellularAutomata, init_grid!, size, getindex, neighbors
+
 import Base.size
-using Base.Random
 
-@edit Base.Random.rand()
+using Base.Random, CAType
+using nbhd
 
 
-type CA
-    width::Int64
-    height::Int64
-#    model
-    grid::Array{Int64, 2}
-    gen::Int64
+type CellularAutomata
+    height::Int
+    width::Int
+    grid::Grid
+    gen::Int
 
-    function CA(w, h)
+    function CellularAutomata(w::Int, h::Int)
+        new(h, w, zeros(Cell, (h, w)), 0)
     end
 end
 
-function size(ca::CA)
-    ca.width, ca.height
+function init_grid!(ca::CellularAutomata, gen::Function)
+    ca.grid = [gen(j, i) for j = 1:ca.height, i = 1:ca.width] # = gen(x, y)
 end
 
 
-c = CA(0,0,[[1,3,4] [3,2,0]], 0)
-size(c)
+function size(ca::CellularAutomata)
+    ca.width, ca.height
+end
 
-rand(1:3, 2,2)
-?rand
+function getindex(ca::CellularAutomata, x::Int, y::Int)
+    boundary_cell = 1
+
+    (x < 1 || x > ca.width)  && return boundary_cell
+    (y < 1 || y > ca.height) && return boundary_cell
+    ca.grid[y, x]
+end
+
+
+function neighbors(x::Int, y::Int, ca::CellularAutomata, nbhd::Nbhd)
+    [ca[y+n[1], x+n[2]] for n in nbhd]
+end
+
 
 end
