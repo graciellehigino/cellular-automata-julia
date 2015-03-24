@@ -3,8 +3,8 @@ using Model
 import term
 
 function main()
-    const width = 120
-    const height = 70
+    const width = 160
+    const height = 80
 
     ca = CellularAutomata(width, height)
 
@@ -15,7 +15,9 @@ function main()
     const swirl        = generations([2,3], [3,4], 8)
     const cubism = Cyclic(3, 2, 5, nbhd.neumann(2))
 
-    const model = cubism
+    const cyclic_spirals = Cyclic(8, 3, 5, nbhd.moore(3))
+
+    const model = cyclic_spirals
 
     init_grid!(ca, (x,y)->rand_cell(model))
 
@@ -24,9 +26,9 @@ function main()
     function disp_term(ca::CellularAutomata)
         for j in 1:ca.height
             for i in 1:ca.width
-                print(term.characters[ca.grid[j, i]+1], " ")
+                print(term.characters[ca.grid[j, i]+1], "")
     #            print(ca.grid[j, i], " ")
-    #            print(term.color(colors[ca.grid[j, i]+1], "  "))
+#                print(term.color(colors[ca.grid[j, i]+1], "  "))
             end
             print("\n")
         end
@@ -38,7 +40,7 @@ function main()
         term.clear_display()
         disp_term(ca)
         next_gen!(ca, model)
-#        sleep(0.1)
+        sleep(0.1)
     end
 
 end
