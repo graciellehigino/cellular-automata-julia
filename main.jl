@@ -3,8 +3,8 @@ using Model
 import term
 
 function main()
-    const width = 160
-    const height = 80
+    const width = 120
+    const height = 70
 
     ca = CellularAutomata(width, height)
 
@@ -13,7 +13,9 @@ function main()
     const lifegame = life([2,3], [3])
     const brians_brain = generations([], [2], 3)
     const swirl        = generations([2,3], [3,4], 8)
-    const model = swirl
+    const cubism = Cyclic(3, 2, 5, nbhd.neumann(2))
+
+    const model = cubism
 
     init_grid!(ca, (x,y)->rand_cell(model))
 

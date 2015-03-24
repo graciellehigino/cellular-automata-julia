@@ -1,5 +1,6 @@
 module Model
-export AbstractModel, LagerThanLife, next_cell, next_gen!, rand_cell
+export AbstractModel, LagerThanLife, Cyclic
+export next_cell, next_gen!, rand_cell
 export generations, life
 
 using nbhd
@@ -50,6 +51,28 @@ end
 
 generations(S,B,C) = LagerThanLife(S, B, C, 1, moore(1))
 life(S, B) = generations(S, B, 2)
+
+type Cyclic <: AbstractModel
+    C::Int64
+    r::Int64
+    threshold::Int64
+    nbhd::Nbhd
+end
+
+inc_cyclic(v::Int64, num::Int64) = (v+1) % num
+
+function next_cell(x::Int64, y::Int64, model::Cyclic, ca::CellularAutomata)
+    cell = ca[y, x]
+    next = cell
+    next_state = inc_cyclic(cell, model.C)
+    num_next_state = count(x->x==next_state, neighbors(x, y, ca, model.nbhd))
+
+    if num_next_state >= model.threshold
+        next = next_state
+    end
+
+    next
+end
 
 
 end
