@@ -12,7 +12,4 @@ function neumann(r)
     filter(x -> abs(x[1]) + abs(x[2]) <= r, list)
 end
 
-moore(1)
-neumann(2)
-
 end

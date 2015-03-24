@@ -8,12 +8,12 @@ using nbhd
 
 
 type CellularAutomata
-    height::Int
-    width::Int
+    height::Int64
+    width::Int64
     grid::Grid
-    gen::Int
+    gen::Int64
 
-    function CellularAutomata(w::Int, h::Int)
+    function CellularAutomata(w::Int64, h::Int64)
         new(h, w, zeros(Cell, (h, w)), 0)
     end
 end
@@ -27,16 +27,16 @@ function size(ca::CellularAutomata)
     ca.width, ca.height
 end
 
-function getindex(ca::CellularAutomata, x::Int, y::Int)
+function getindex(ca::CellularAutomata, x::Int64, y::Int64)
     boundary_cell = 1
 
     (x < 1 || x > ca.width)  && return boundary_cell
     (y < 1 || y > ca.height) && return boundary_cell
-    ca.grid[y, x]
+    return ca.grid[y, x]
 end
 
 
-function neighbors(x::Int, y::Int, ca::CellularAutomata, nbhd::Nbhd)
+function neighbors(x::Int64, y::Int64, ca::CellularAutomata, nbhd::Nbhd)
     [ca[y+n[1], x+n[2]] for n in nbhd]
 end
 

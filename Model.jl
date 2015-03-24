@@ -17,14 +17,14 @@ end
 
 
 type LagerThanLife <: AbstractModel
-    S::Array{Int, 1} # survive
-    B::Array{Int, 1} # born
-    C::Int           # num sutates
-    r::Int           # range
+    S::Array{Int64, 1} # survive
+    B::Array{Int64, 1} # born
+    C::Int64           # num sutates
+    r::Int64           # range
     nbhd::Nbhd
 end
 
-function next_cell(x::Int, y::Int, model::LagerThanLife, ca::CellularAutomata)
+function next_cell(x::Int64, y::Int64, model::LagerThanLife, ca::CellularAutomata)
     ALIVE = model.C - 1
     DEAD = 0
     cell = ca[y, x]
