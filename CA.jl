@@ -28,7 +28,7 @@ function size(ca::CellularAutomata)
 end
 
 function getindex(ca::CellularAutomata, x::Int64, y::Int64)
-    boundary_cell = 1
+    boundary_cell = 0
 
     (x < 1 || x > ca.width)  && return boundary_cell
     (y < 1 || y > ca.height) && return boundary_cell
